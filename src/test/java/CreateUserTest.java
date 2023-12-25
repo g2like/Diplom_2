@@ -1,5 +1,6 @@
-import constants.RandomDataUser;
+import constants.UserGenerator;
 import data.UserData;
+import groovy.xml.StreamingDOMBuilder;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
@@ -17,7 +18,7 @@ public class CreateUserTest {
     @Before
     public void setUp() {
         userSteps = new UserSteps();
-        user = RandomDataUser.getRandomUser();
+        user = UserGenerator.getRandomUser();
     }
 
     @Test
@@ -25,7 +26,7 @@ public class CreateUserTest {
     @Description("Check create user and check answer")
     public void createUserTest() {
         response = userSteps.createUser(user);
-        userSteps.getAccessToken(response, accessToken);
+        accessToken = userSteps.getAccessToken(response, accessToken);
         userSteps.checkSuccessAnswer(response);
     }
 

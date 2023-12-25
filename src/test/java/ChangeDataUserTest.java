@@ -1,5 +1,5 @@
 import client.UserCredentials;
-import constants.RandomDataUser;
+import constants.UserGenerator;
 import data.UserData;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -19,9 +19,9 @@ public class ChangeDataUserTest {
     @Before
     public void setUp() {
         userSteps = new UserSteps();
-        user = RandomDataUser.getRandomUser();
+        user = UserGenerator.getRandomUser();
         response = userSteps.createUser(user);
-        accessToken = response.extract().body().path("accessToken").toString();
+        accessToken = userSteps.getAccessToken(response,accessToken);
         response = userSteps.loginUser(UserCredentials.from(user));
     }
 

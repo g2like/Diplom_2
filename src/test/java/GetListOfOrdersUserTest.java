@@ -1,16 +1,18 @@
 import client.UserCredentials;
-import constants.RandomDataUser;
+import constants.UserGenerator;
 import data.UserData;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import order.OrderData;
+import order.OrderGenerator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import steps.OrderSteps;
 import steps.UserSteps;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetListOfOrdersUserTest {
@@ -20,16 +22,17 @@ public class GetListOfOrdersUserTest {
     private OrderSteps orderSteps;
     private String accessToken;
     ValidatableResponse response;
+    private ArrayList<String> availableIds;
 
     @Before
     public void setUp() {
         userSteps = new UserSteps();
         orderSteps = new OrderSteps();
-        user = RandomDataUser.getRandomUser();
-        userSteps.createUser(user);
-        response = userSteps.loginUser(UserCredentials.from(user));
-        accessToken = response.extract().body().path("accessToken").toString();
-        order = new OrderData(List.of("61c0c5a71d1f82001bdaaa6f", "61c0c5a71d1f82001bdaaa79", "61c0c5a71d1f82001bdaaa78"));
+        user = UserGenerator.getRandomUser();
+        response = userSteps.createUser(user);
+        accessToken = userSteps.getAccessToken(response, accessToken);
+        availableIds = orderSteps.getAvailableIds();
+        order = new OrderData(OrderGenerator.getCorrectOrderIds(availableIds, 1));
         orderSteps.createOrderWithToken(order, accessToken);
     }
 

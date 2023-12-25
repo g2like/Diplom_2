@@ -8,6 +8,8 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import order.OrderData;
 
+import java.util.ArrayList;
+
 public class OrderSteps extends RestClient {
     @Step("Create order with token")
     public ValidatableResponse createOrderWithToken(OrderData order, String accessToken) {
@@ -81,5 +83,19 @@ public class OrderSteps extends RestClient {
         response.assertThat()
                 .statusCode(401)
                 .body("message", is("You should be authorised"));
+    }
+
+    @Step("Get available ids for ingredient")
+    public ArrayList<String> getAvailableIds() {
+        return getIngredients().extract().path("data._id");
+    }
+
+    @Step("Get ingredients")
+    public ValidatableResponse getIngredients() {
+        return given()
+                .spec(requestSpecification())
+                .when()
+                .get(Urls.INGREDIENTS_PATH)
+                .then();
     }
 }

@@ -16,9 +16,13 @@
         <aspectj.version>1.9.7</aspectj.version>
         <!-- версия Allure -->
         <allure.version>2.15.0</allure.version>
-
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit4</artifactId>
@@ -61,6 +65,11 @@
             <version>LATEST</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+        <groupId>com.github.javafaker</groupId>
+        <artifactId>javafaker</artifactId>
+        <version>1.0.2</version>
+    </dependency>
     </dependencies>
     <build>
         <plugins>

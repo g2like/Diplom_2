@@ -73,7 +73,7 @@ public class UserSteps extends RestClient {
 
     @Step("Get access token")
     public String getAccessToken(ValidatableResponse response, String accessToken) {
-        return accessToken = response.extract().body().path("accessToken").toString();
+        return accessToken = response.extract().path("accessToken");
     }
 
     @Step("Check success answer")
